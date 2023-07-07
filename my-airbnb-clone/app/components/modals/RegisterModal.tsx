@@ -10,6 +10,8 @@ import useRegisterModal from '@/app/hooks/useRegisterModal';
 import Modal from './Modal';
 import Heading from '../Heading';
 import Input from '../inputs/Input';
+import toast from 'react-hot-toast';
+import Button from '../Button';
 
 
 const RegisterModal = () => {
@@ -36,7 +38,7 @@ const onSubmit : SubmitHandler<FieldValues>=(data)=>{
         registerModal.onClose();
     })
     .catch((error)=>{
-        console.log(error)
+        toast.error("hey")
     })
     .finally(()=>{
         setIsLoading(false)
@@ -48,7 +50,42 @@ const bodyContent =(
         <Heading 
         title='Welcome to Airbnb'
         subtitle='Create an account'/>
-        <Input/>
+        <Input
+        id='email'
+        label='Email'
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required/>
+        <Input
+        id='name'
+        label='Name'
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required/>
+        <Input
+        id='password'
+        label='Password'
+        type='password'
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required/>
+    </div>
+)
+const footerContent =(
+    <div className='flex 
+                    flex-col
+                    gap-4
+                    mt-3'>
+                        <hr />
+                        <Button
+                        outline
+                        label='Continue with google'
+                        icon={FcGoogle}
+                        onClick={()=>{}}
+                        />
     </div>
 )
     return ( <Modal
@@ -59,6 +96,7 @@ const bodyContent =(
     onClose={registerModal.onClose}
     onSubmit={handleSubmit(onSubmit)}
     body={bodyContent}
+    footer={footerContent}
     /> );
 }
  

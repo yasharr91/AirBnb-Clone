@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import {IoMdClose} from 'react-icons/io'
+import { IoMdClose } from "react-icons/io";
 import Button from "../Button";
 
 interface ModalProps {
@@ -27,7 +27,7 @@ const Modal: React.FC<ModalProps> = ({
   actionLabel,
   disabled,
   secondaryAction,
-  secondaryActionLabel
+  secondaryActionLabel,
 }) => {
   const [showModal, setShowModal] = useState(isOpen);
 
@@ -126,8 +126,8 @@ const Modal: React.FC<ModalProps> = ({
                         focus:outline-none
                          "
             >
-                {/* header */}
-                <div
+              {/* header */}
+              <div
                 className="
                           flex
                           items-center
@@ -135,49 +135,51 @@ const Modal: React.FC<ModalProps> = ({
                           rounded-t
                           justify-center
                           relative
-                          border-b-[1px]"   >
-                            <button 
-                                                onClick={handleClose}
-                                                className="
+                          border-b-[1px]"
+              >
+                <button
+                  onClick={handleClose}
+                  className="
                                                 p-1
                                                 border-0
                                                 hover:opacity-70
                                                 transition
                                                 absolute
-                                                left-9">
-                                                    <IoMdClose size={18}/>
-                                                </button>
-                                                <div className="text-lg font-semibold">
-                                                    {title}
-                                                </div>
-                          </div>
-                          {/* body */}
-                          <div className="relative p-6 flex-auto">
-                            {body}
-                          </div>
-                          {/*footer */}
-                          <div className="flex flex-col gap-2 p-6">
-                            <div className="
+                                                left-9"
+                >
+                  <IoMdClose size={18} />
+                </button>
+                <div className="text-lg font-semibold">{title}</div>
+              </div>
+              {/* body */}
+              <div className="relative p-6 flex-auto">{body}</div>
+              {/*footer */}
+              <div className="flex flex-col gap-2 p-6">
+                <div
+                  className="
                                             flex
                                             flex-row  
                                             items-center
                                             gap-4
-                                            w-full "   >
-                                                {secondaryAction && secondaryActionLabel &&
-                                                (
-<Button
-                                                outline
-                                                 disabled={disabled}
-                                                 label={secondaryActionLabel}
-                                                 onClick={handleSecondaryAction}/>
-                                                )}
-                                                
-                                                <Button
-                                                 disabled={disabled}
-                                                 label={actionLabel}
-                                                 onClick={handleSubmit}/>
-                                            </div>
-                          </div>
+                                            w-full "
+                >
+                  {secondaryAction && secondaryActionLabel && (
+                    <Button
+                      outline
+                      disabled={disabled}
+                      label={secondaryActionLabel}
+                      onClick={handleSecondaryAction}
+                    />
+                  )}
+
+                  <Button
+                    disabled={disabled}
+                    label={actionLabel}
+                    onClick={handleSubmit}
+                  />
+                </div>
+                {footer}
+              </div>
             </div>
           </div>
         </div>

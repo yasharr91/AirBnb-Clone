@@ -4,6 +4,7 @@ import RegisterModal from "./components/modals/RegisterModal";
 import Navbar from "./components/navbar/Navrbar";
 import "./globals.css";
 import { Nunito } from "next/font/google";
+import ToasterProvider from "./providers/ToasterProvider";
 
 const font = Nunito({ subsets: ["latin"] });
 
@@ -20,8 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-      {/* for hydration error */}
+      {/* for hydration error 
+        <Toaster/> require at least one parent 
+      */}
         <ClientOnly> 
+          <ToasterProvider/>
           <RegisterModal/>
           <Navbar />
         </ClientOnly>
