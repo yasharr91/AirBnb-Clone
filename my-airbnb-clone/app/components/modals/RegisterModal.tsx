@@ -7,6 +7,7 @@ import {FieldValues,
 SubmitHandler,
 useForm} from 'react-hook-form'
 import useRegisterModal from '@/app/hooks/useRegisterModal';
+import useLoginModal from '@/app/hooks/useLoginModal';
 import Modal from './Modal';
 import Heading from '../Heading';
 import Input from '../inputs/Input';
@@ -18,7 +19,7 @@ import { signIn } from 'next-auth/react';
 const RegisterModal = () => {
     const registerModal = useRegisterModal();
     const [isLoading,setIsLoading]=useState(false);
-
+    const loginModal = useLoginModal()
     const {
         register,
         handleSubmit,formState:{
@@ -45,6 +46,11 @@ const onSubmit : SubmitHandler<FieldValues>=(data)=>{
         setIsLoading(false)
     })
 }
+
+const onToggle = useCallback(() => {
+    registerModal.onClose();
+    loginModal.onOpen();
+  }, [loginModal, registerModal])
 
 const bodyContent =(
     <div className='flex flex-col gap-4'>
@@ -107,7 +113,7 @@ const footerContent =(
                                         <div>
                                         Already have an account?
                                         </div>
-                                        <div onClick={registerModal.onClose}
+                                        <div onClick={onToggle}
                                          className='
                                                     text-neutral-800
                                                     cursor-pointer

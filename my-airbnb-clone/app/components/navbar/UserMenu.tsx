@@ -9,6 +9,7 @@ import useLoginModal from "@/app/hooks/useLoginModal";
 import LoginModal from "../modals/LoginModal";
 import { signOut } from "next-auth/react";
 import { SafeUSer } from "@/app/types";
+import useRentModal from "@/app/hooks/useRentModal";
 
 
 interface UserMenuProps{
@@ -20,11 +21,21 @@ const UserMenu:React.FC<UserMenuProps> = ({
 }) => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
+  const rentModal = useRentModal();
   const [isOpen, setIsOpen] = useState(false);
+  
+  
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
   }, []);
 
+  const onRent=useCallback(()=>{
+    if(!currentUser){
+      return loginModal.onOpen()
+    }
+    //open rent modal
+    rentModal.onOpen()
+  },[currentUser,loginModal,rentModal])
   return (
     <div className="relative">
       <div
@@ -34,6 +45,7 @@ const UserMenu:React.FC<UserMenuProps> = ({
                     gap-3"
       >
         <div
+                  onClick={onRent}
           className="
                                     hidden
                                     md:block
@@ -45,7 +57,7 @@ const UserMenu:React.FC<UserMenuProps> = ({
                                     hover:bg-neutral-100
                                     transition
                                     cursor-pointer"
-          onClick={() => {}}
+         
         >
           Airbnb your home
         </div>
@@ -103,7 +115,7 @@ const UserMenu:React.FC<UserMenuProps> = ({
                                       onClick={()=>{}}
                                       label="My properties"/>
                                       <MenuItem
-                                      onClick={()=>{}}
+                                      onClick={rentModal.onOpen}
                                       label="Airbnb my home"/>
                                       <hr />
                                       <MenuItem
