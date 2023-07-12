@@ -5,3 +5,10 @@
 html,body:root{
     height: 100%;
 }
+
+.leaflet-bottem,
+.leaflet-control,
+.leaflet-pane,
+.leaflet-top{
+    z-index: 0 Im !important;
+}

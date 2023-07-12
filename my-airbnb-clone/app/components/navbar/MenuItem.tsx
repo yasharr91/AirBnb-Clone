@@ -1,5 +1,5 @@
 'use client'
-
+import { block } from "million/react-server";
 interface MenuItemProps {
     onClick:()=> void;
     label:string
@@ -21,5 +21,5 @@ const MenuItem:React.FC<MenuItemProps> = ({
                     {label}
                 </div> );
 }
- 
-export default MenuItem;
+const MainBlock = block(MenuItem);
+export default MainBlock;

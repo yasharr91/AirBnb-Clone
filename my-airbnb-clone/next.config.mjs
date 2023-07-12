@@ -1,3 +1,6 @@
+
+import million from "million/compiler";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     experimental: {
@@ -9,8 +12,10 @@ const nextConfig = {
         'avatars.githubusercontent.com',
         'lh3.googleusercontent.com'
       ]
-    }
+    },
+    reactStrictMode: true,
   }
   
-  module.exports = nextConfig
+  // module.exports = nextConfig
+  export default million.next(nextConfig);
   
