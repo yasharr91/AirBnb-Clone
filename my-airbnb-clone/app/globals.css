@@ -10,5 +10,5 @@ html,body:root{
 .leaflet-control,
 .leaflet-pane,
 .leaflet-top{
-    z-index: 0 Im !important;
+    z-index: 0 !important;
 }

@@ -18,6 +18,8 @@ shadowUrl:markerShadow.src
 interface Mapprops {
     center?:number[]
 }
+const url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
 const Map:React.FC<Mapprops> = ({
     center
@@ -28,6 +30,15 @@ const Map:React.FC<Mapprops> = ({
                     scrollWheelZoom={false}
                     className='h-[35vh] rounded-lg'
                     >
+                     <TileLayer
+                            url={url}
+                            attribution={attribution}
+                            />
+                            {center && (
+                                <Marker
+                                position={center as L.LatLngExpression}
+                                />
+                            )}
             </MapContainer>);
 }
  
