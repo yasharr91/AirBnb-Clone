@@ -125,7 +125,8 @@ const Categories = () => {
                         flex
                         items-center
                         justify-between
-                        overflow-x-auto">
+                        overflow-x-auto
+                        parent-container">
                             {categories.map((item)=>
                                 <CategoryBox
                                 key={item.label}
