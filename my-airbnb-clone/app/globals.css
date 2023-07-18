@@ -1,3 +1,5 @@
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,6 +7,8 @@
 html,body:root{
     height: 100%;
 }
+
+
 
 .leaflet-bottem,
 .leaflet-control,
@@ -14,4 +18,13 @@ html,body:root{
 }
 .parent-container::-webkit-scrollbar {
     display: none;
+  }
+
+  .rdrMonth{
+    width: 100% !important;
+  }
+  .rdrCalendarWrapper{
+    width: 100% !important;
+
+    font-size:16px !important ;
   }

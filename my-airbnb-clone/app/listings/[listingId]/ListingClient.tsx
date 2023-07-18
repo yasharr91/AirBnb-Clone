@@ -6,12 +6,12 @@ import ListingInfo from "@/app/components/listings/ListingInfo";
 import ListingReservation from "@/app/components/listings/ListingReservation";
 import { categories } from "@/app/components/navbar/Categories";
 import useLoginModal from "@/app/hooks/useLoginModal";
-import { SafeListing, SafeUser } from "@/app/types";
-import { Reservation } from "@prisma/client";
+import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
 import axios from "axios";
 import { differenceInCalendarDays, differenceInDays, eachDayOfInterval } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Range } from "react-date-range";
 import { toast } from "react-hot-toast";
 
 const initialDateRange = {
@@ -21,7 +21,7 @@ const initialDateRange = {
 };
 
 interface ListingClientProps {
-  reservations?: Reservation[];
+  reservations?: SafeReservation[];
   listing: SafeListing & {
     user: SafeUser;
   };
@@ -50,7 +50,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
 
   const [isLoading, setIsLoading] = useState(false);
   const [totalPrice, setTotalPrice] = useState(listing.price);
-  const [dateRange, setDateRange] = useState(initialDateRange);
+  const [dateRange, setDateRange] = useState<Range>(initialDateRange);
 
   const onCreateReservation = useCallback(() => {
     if (!currentUser) {
@@ -68,6 +68,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
         toast.success("Listing reserved!");
         setDateRange(initialDateRange);
         // Redirect to /trips
+        router.push('/trips')
         router.refresh();
       })
       .catch(() => {
@@ -81,12 +82,16 @@ const ListingClient: React.FC<ListingClientProps> = ({
   useEffect(() => {
     // change total price depending how user select dates
     if (dateRange.startDate && dateRange.endDate) {
-      const dayCount = differenceInCalendarDays(dateRange.endDate, dateRange.startDate);
+      const dayCount = differenceInCalendarDays(
+        dateRange.endDate,
+         dateRange.startDate);
 
       if (dayCount && listing.price) {
         setTotalPrice(dayCount * listing.price);
+      }else{
+        setTotalPrice(listing.price);
       }
-      setTotalPrice(listing.price);
+     
     }
   }, [dateRange, listing.price]);
 
@@ -138,7 +143,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
                                 dateRange={dateRange}
                                 onSubmit={onCreateReservation}
                                 disabled={isLoading}
-                                disabledDated={disabledDates}
+                                disabledDates={disabledDates}
                                 
                                 />
 

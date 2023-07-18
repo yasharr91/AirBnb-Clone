@@ -16,7 +16,7 @@ currentUser
         listingId,
         currentUser
     });
-    
+   
     return ( 
     <div
     onClick={toggleFavorite}
