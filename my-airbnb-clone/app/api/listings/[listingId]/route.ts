@@ -2,44 +2,29 @@ import {NextResponse} from 'next/server'
 import prisma from '@/app/libs/prismadb'
 import getCurrentUser from '@/app/actions/getCurrentUser'
 
+interface IParams {
+    listingId?:string;
+}
 
-export async function POST(request:Request) {
+export async function DELETE(
+    request:Request,
+    {params}:{params:IParams}) {
     const currentUser = await getCurrentUser();
-
     if(!currentUser){
-        return NextResponse.error();
+        return NextResponse.error()
     }
 
-    const body = await request.json();
-    const {
-        title,
-        description,imageSrc,
-        category,
-        roomCount,
-        bathroomCount,
-        guestCount,
-        location,
-        price
-    }=body;
-    Object.keys(body).forEach((value:any) => {
-        if(!body[value]){
-            NextResponse.error(); //does not do anything
-        }
-    });
+    const {listingId}=params
+    if(!listingId || typeof listingId !== 'string'){
+        throw new Error ('Invalid ID')
+    }
 
-    const listing = await prisma.listing.create({
-        data:{
-            title,
-            description,
-            imageSrc,
-            category,
-            roomCount,
-            bathroomCount,
-            guestCount,
-            locationValue:location.value,
-            price:parseInt(price,10),
+    const listing = await prisma.listing.deleteMany({ //just in delete many it is possible to insert multiple where conditions
+        where:{
+            id:listingId,
             userId:currentUser.id
         }
     })
+
     return NextResponse.json(listing)
 }
